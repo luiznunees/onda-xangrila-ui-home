@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { folder, fileImage, fileVideo, folderOpen } from "lucide-react";
+import { Folder, FileImage, FileVideo, FolderOpen } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useKeyNavigation } from "@/hooks/use-key-navigation";
@@ -105,13 +105,13 @@ const Explorer = () => {
   const getItemIcon = (item: FileItem) => {
     switch(item.type) {
       case "folder":
-        return <folderOpen className="h-8 w-8 text-onda-primary" />;
+        return <FolderOpen className="h-8 w-8 text-onda-primary" />;
       case "image":
-        return <fileImage className="h-8 w-8 text-blue-400" />;
+        return <FileImage className="h-8 w-8 text-blue-400" />;
       case "video":
-        return <fileVideo className="h-8 w-8 text-red-400" />;
+        return <FileVideo className="h-8 w-8 text-red-400" />;
       default:
-        return <folder className="h-8 w-8 text-gray-400" />;
+        return <Folder className="h-8 w-8 text-gray-400" />;
     }
   };
 
@@ -123,7 +123,7 @@ const Explorer = () => {
       <div className="relative z-10 container mx-auto py-4">
         <PageHeader 
           title="Explorer" 
-          icon={<folder className="h-8 w-8" />} 
+          icon={<Folder className="h-8 w-8" />} 
           showBackButton={true} 
         />
         

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { galleryHorizontal, image, play, pause, circleX, circleChevronLeft, circleChevronRight, circlePlay } from "lucide-react";
+import { GalleryHorizontal, Image, Play, Pause, CircleX, CircleChevronLeft, CircleChevronRight, CirclePlay } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import { Card } from "@/components/ui/card";
 import { useKeyNavigation } from "@/hooks/use-key-navigation";
@@ -178,7 +178,7 @@ const MediaGallery = () => {
       <div className="relative z-10 container mx-auto py-4">
         <PageHeader 
           title="Galeria de Mídia" 
-          icon={<galleryHorizontal className="h-8 w-8" />} 
+          icon={<GalleryHorizontal className="h-8 w-8" />} 
           showBackButton={true}
         />
         
@@ -278,7 +278,7 @@ const MediaGallery = () => {
                   onClick={handleMediaClose}
                   className="text-white hover:bg-white/20"
                 >
-                  <circleX className="h-6 w-6" />
+                  <CircleX className="h-6 w-6" />
                 </Button>
               </div>
               
@@ -296,7 +296,7 @@ const MediaGallery = () => {
                     onClick={handlePrevious}
                     className="text-white hover:bg-white/20 h-12 w-12 rounded-full"
                   >
-                    <circleChevronLeft className="h-10 w-10" />
+                    <CircleChevronLeft className="h-10 w-10" />
                   </Button>
                   
                   {(selectedItem?.type === "video" || selectedItem?.type === "slideshow") && (
@@ -307,9 +307,9 @@ const MediaGallery = () => {
                       className="text-white hover:bg-white/20 h-12 w-12 rounded-full"
                     >
                       {isPlaying ? (
-                        <pause className="h-8 w-8" />
+                        <Pause className="h-8 w-8" />
                       ) : (
-                        <play className="h-8 w-8" />
+                        <Play className="h-8 w-8" />
                       )}
                     </Button>
                   )}
@@ -320,7 +320,7 @@ const MediaGallery = () => {
                     onClick={handleNext}
                     className="text-white hover:bg-white/20 h-12 w-12 rounded-full"
                   >
-                    <circleChevronRight className="h-10 w-10" />
+                    <CircleChevronRight className="h-10 w-10" />
                   </Button>
                 </div>
               </div>

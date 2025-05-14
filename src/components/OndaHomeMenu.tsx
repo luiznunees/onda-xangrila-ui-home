@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useKeyNavigation } from '@/hooks/use-key-navigation';
 import MenuCard from './MenuCard';
 import { useNavigate } from 'react-router-dom';
-import { folder, image } from 'lucide-react';
+import { Folder, Image, Cast, Calendar, Bell, Contact, Settings } from 'lucide-react';
 import { toast } from './ui/use-toast';
 
 type OndaHomeMenuProps = {
@@ -20,38 +20,38 @@ const OndaHomeMenu = ({ position, className = '' }: OndaHomeMenuProps) => {
     { 
       id: 'explorer', 
       label: 'Explorer', 
-      icon: <folder className="w-10 h-10" />,
+      icon: Folder,
       action: () => navigate('/explorer')
     },
     { 
       id: 'gallery', 
       label: 'Galeria', 
-      icon: <image className="w-10 h-10" />,
+      icon: Image,
       action: () => navigate('/gallery')
     },
     // Os outros itens do menu que serão implementados futuramente
     { 
       id: 'cast', 
       label: 'Transmitir', 
-      icon: <folder className="w-10 h-10" />,
+      icon: Cast,
       action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
     },
     { 
       id: 'agenda', 
       label: 'Agenda', 
-      icon: <folder className="w-10 h-10" />,
+      icon: Calendar,
       action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
     },
     { 
       id: 'notices', 
       label: 'Avisos', 
-      icon: <folder className="w-10 h-10" />,
+      icon: Bell,
       action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
     },
     { 
       id: 'contacts', 
       label: 'Contatos', 
-      icon: <folder className="w-10 h-10" />,
+      icon: Contact,
       action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
     }
   ];
@@ -81,13 +81,9 @@ const OndaHomeMenu = ({ position, className = '' }: OndaHomeMenuProps) => {
           key={item.id}
           label={item.label}
           icon={item.icon}
-          isActive={focusedIndex === index}
+          active={focusedIndex === index}
           onClick={item.action}
-          className={`
-            transition-all duration-500 ease-out
-            ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
-            transition-delay-${index * 100}
-          `}
+          index={index}
         />
       ))}
     </div>
