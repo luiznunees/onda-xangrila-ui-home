@@ -1,77 +1,97 @@
 
-import { useState, useCallback, useEffect } from 'react';
-import { Compass, Cast, Image, Calendar, Bell, Users, Settings } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useKeyNavigation } from '@/hooks/use-key-navigation';
 import MenuCard from './MenuCard';
-import { cn } from "@/lib/utils";
+import { useNavigate } from 'react-router-dom';
+import { folder, image } from 'lucide-react';
+import { toast } from './ui/use-toast';
 
-interface OndaHomeMenuProps {
-  position?: 'left' | 'right';
+type OndaHomeMenuProps = {
+  position: 'left' | 'right';
   className?: string;
-}
+};
 
-const menuItems = [
-  { icon: Compass, label: "Explorer" },
-  { icon: Cast, label: "Transmitir" },
-  { icon: Image, label: "Galeria" },
-  { icon: Calendar, label: "Agenda" },
-  { icon: Bell, label: "Avisos" },
-  { icon: Users, label: "Contatos" },
-  { icon: Settings, label: "Configurações" }
-];
-
-export default function OndaHomeMenu({ position = 'left', className }: OndaHomeMenuProps) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+const OndaHomeMenu = ({ position, className = '' }: OndaHomeMenuProps) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const navigate = useNavigate();
+  
+  // Menu items with their respective icons and actions
+  const menuItems = [
+    { 
+      id: 'explorer', 
+      label: 'Explorer', 
+      icon: <folder className="w-10 h-10" />,
+      action: () => navigate('/explorer')
+    },
+    { 
+      id: 'gallery', 
+      label: 'Galeria', 
+      icon: <image className="w-10 h-10" />,
+      action: () => navigate('/gallery')
+    },
+    // Os outros itens do menu que serão implementados futuramente
+    { 
+      id: 'cast', 
+      label: 'Transmitir', 
+      icon: <folder className="w-10 h-10" />,
+      action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
+    },
+    { 
+      id: 'agenda', 
+      label: 'Agenda', 
+      icon: <folder className="w-10 h-10" />,
+      action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
+    },
+    { 
+      id: 'notices', 
+      label: 'Avisos', 
+      icon: <folder className="w-10 h-10" />,
+      action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
+    },
+    { 
+      id: 'contacts', 
+      label: 'Contatos', 
+      icon: <folder className="w-10 h-10" />,
+      action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
+    }
+  ];
+  
+  // Filter to show only left or right menu items
+  const visibleItems = position === 'left'
+    ? menuItems.slice(0, 3)  // First 3 items for left menu
+    : menuItems.slice(3);    // Rest for right menu
+    
+  const { focusedIndex } = useKeyNavigation({
+    itemCount: visibleItems.length,
+    onSelect: (index) => visibleItems[index].action()
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsVisible(true);
+      setIsLoaded(true);
     }, 300);
-
+    
     return () => clearTimeout(timer);
   }, []);
 
-  // Simula a navegação com teclado (para teste no navegador)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      switch (e.key) {
-        case 'ArrowUp':
-          setActiveIndex(prev => (prev > 0 ? prev - 1 : menuItems.length - 1));
-          break;
-        case 'ArrowDown':
-          setActiveIndex(prev => (prev < menuItems.length - 1 ? prev + 1 : 0));
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
-  const handleItemClick = useCallback((index: number) => {
-    setActiveIndex(index);
-    // Aqui implementaríamos a navegação para a respectiva tela
-    console.log(`Navegando para: ${menuItems[index].label}`);
-  }, []);
-
   return (
-    <div className={cn(
-      "flex flex-col space-y-4",
-      position === 'left' ? 'items-start' : 'items-end',
-      isVisible ? "opacity-100" : "opacity-0",
-      "transition-all duration-700 ease-out",
-      className
-    )}>
-      {menuItems.map((item, index) => (
+    <div className={`flex flex-col space-y-4 ${className}`}>
+      {visibleItems.map((item, index) => (
         <MenuCard
-          key={item.label}
-          icon={item.icon}
+          key={item.id}
           label={item.label}
-          active={index === activeIndex}
-          index={index}
-          onClick={() => handleItemClick(index)}
+          icon={item.icon}
+          isActive={focusedIndex === index}
+          onClick={item.action}
+          className={`
+            transition-all duration-500 ease-out
+            ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
+            transition-delay-${index * 100}
+          `}
         />
       ))}
     </div>
   );
-}
+};
+
+export default OndaHomeMenu;
