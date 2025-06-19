@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GalleryHorizontal, Image, Play, Pause, CircleX, CircleChevronLeft, CircleChevronRight, CirclePlay } from "lucide-react";
@@ -247,11 +246,11 @@ const MediaGallery = () => {
                     <p className="text-white text-sm truncate pr-4">{item.name}</p>
                     
                     {item.type === 'video' && (
-                      <play className="h-5 w-5 text-white bg-black/50 rounded-full p-1" />
+                      <Play className="h-5 w-5 text-white bg-black/50 rounded-full p-1" />
                     )}
                     
                     {item.type === 'slideshow' && (
-                      <circlePlay className="h-5 w-5 text-white" />
+                      <CirclePlay className="h-5 w-5 text-white" />
                     )}
                   </div>
                 </div>

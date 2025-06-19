@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Settings, Image, Folder, Globe, Monitor, Palette, Shield, Wrench } from "lucide-react";
@@ -74,7 +73,7 @@ const Configuracoes = () => {
     let isHolding = false;
     
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && e.key === "ArrowDown") {
+      if (e.key === "Enter" || e.key === "ArrowDown") {
         if (!isHolding) {
           pressTime = Date.now();
           isHolding = true;
