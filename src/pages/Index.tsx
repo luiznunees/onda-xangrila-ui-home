@@ -36,8 +36,8 @@ const Index = () => {
             <OndaLogo className="transform scale-125" />
           </div>
           
-          {/* Espaço para manter a simetria (ou menu direito se quisermos implementar) */}
-          <div className="w-1/4"></div>
+          {/* Menu direito */}
+          <OndaHomeMenu position="right" className="w-1/4" />
         </div>
         
         {/* Indicador de navegação */}

@@ -8,6 +8,10 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Explorer from "./pages/Explorer";
 import MediaGallery from "./pages/MediaGallery";
+import Transmitir from "./pages/Transmitir";
+import Apresentacao from "./pages/Apresentacao";
+import Configuracoes from "./pages/Configuracoes";
+import ModoTecnico from "./pages/ModoTecnico";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +26,10 @@ const App = () => (
           <Route path="/explorer" element={<Explorer />} />
           <Route path="/explorer/:path" element={<Explorer />} />
           <Route path="/gallery" element={<MediaGallery />} />
+          <Route path="/transmitir" element={<Transmitir />} />
+          <Route path="/apresentacao" element={<Apresentacao />} />
+          <Route path="/configuracoes" element={<Configuracoes />} />
+          <Route path="/modo-tecnico" element={<ModoTecnico />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

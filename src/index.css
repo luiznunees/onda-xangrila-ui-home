@@ -74,6 +74,10 @@
     @apply bg-onda-primary/20 scale-105 shadow-md shadow-onda-primary/30;
   }
   
+  .menu-item.highlight {
+    @apply animate-pulse;
+  }
+  
   .menu-icon {
     @apply text-white/80 text-2xl;
   }
@@ -85,5 +89,20 @@
   .active .menu-icon, 
   .active .menu-text {
     @apply text-white;
+  }
+
+  @keyframes ring-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
+  }
+  
+  .ring-pulse {
+    animation: ring-pulse 2s ease-in-out infinite;
   }
 }

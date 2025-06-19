@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useKeyNavigation } from '@/hooks/use-key-navigation';
 import MenuCard from './MenuCard';
 import { useNavigate } from 'react-router-dom';
-import { Folder, Image, Cast, Calendar, Bell, Contact, Settings } from 'lucide-react';
+import { Folder, Image, Cast, Monitor, Settings } from 'lucide-react';
 import { toast } from './ui/use-toast';
 
 type OndaHomeMenuProps = {
@@ -15,13 +15,14 @@ const OndaHomeMenu = ({ position, className = '' }: OndaHomeMenuProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
   
-  // Menu items with their respective icons and actions
+  // Menu items expandido para Onda Hub 2.0
   const menuItems = [
     { 
       id: 'explorer', 
       label: 'Explorer', 
       icon: Folder,
-      action: () => navigate('/explorer')
+      action: () => navigate('/explorer'),
+      highlight: false // Será true quando pendrive conectado
     },
     { 
       id: 'gallery', 
@@ -29,37 +30,30 @@ const OndaHomeMenu = ({ position, className = '' }: OndaHomeMenuProps) => {
       icon: Image,
       action: () => navigate('/gallery')
     },
-    // Os outros itens do menu que serão implementados futuramente
     { 
       id: 'cast', 
       label: 'Transmitir', 
       icon: Cast,
-      action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
+      action: () => navigate('/transmitir')
     },
     { 
-      id: 'agenda', 
-      label: 'Agenda', 
-      icon: Calendar,
-      action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
+      id: 'presentation', 
+      label: 'Iniciar Apresentação', 
+      icon: Monitor,
+      action: () => navigate('/apresentacao')
     },
     { 
-      id: 'notices', 
-      label: 'Avisos', 
-      icon: Bell,
-      action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
-    },
-    { 
-      id: 'contacts', 
-      label: 'Contatos', 
-      icon: Contact,
-      action: () => toast({ title: "Em breve", description: "Este recurso será implementado em uma próxima atualização." })
+      id: 'settings', 
+      label: 'Configurações', 
+      icon: Settings,
+      action: () => navigate('/configuracoes')
     }
   ];
   
-  // Filter to show only left or right menu items
+  // Divide menu em duas colunas
   const visibleItems = position === 'left'
-    ? menuItems.slice(0, 3)  // First 3 items for left menu
-    : menuItems.slice(3);    // Rest for right menu
+    ? menuItems.slice(0, 3)  // Primeiros 3 itens para menu esquerdo
+    : menuItems.slice(3);    // Restantes para menu direito
     
   const { focusedIndex } = useKeyNavigation({
     itemCount: visibleItems.length,
@@ -84,6 +78,7 @@ const OndaHomeMenu = ({ position, className = '' }: OndaHomeMenuProps) => {
           active={focusedIndex === index}
           onClick={item.action}
           index={index}
+          highlight={item.highlight}
         />
       ))}
     </div>

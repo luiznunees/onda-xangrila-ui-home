@@ -9,15 +9,16 @@ interface MenuCardProps {
   active?: boolean;
   index: number;
   onClick: () => void;
+  highlight?: boolean;
 }
 
-export default function MenuCard({ icon: Icon, label, active = false, index, onClick }: MenuCardProps) {
+export default function MenuCard({ icon: Icon, label, active = false, index, onClick, highlight = false }: MenuCardProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 100 + (index * 50)); // Efeito cascata para os itens aparecerem em sequência
+    }, 100 + (index * 50));
 
     return () => clearTimeout(timer);
   }, [index]);
@@ -27,14 +28,16 @@ export default function MenuCard({ icon: Icon, label, active = false, index, onC
       className={cn(
         "menu-item focus-item outline-none",
         active ? "active" : "",
+        highlight ? "highlight" : "",
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
         "transition-all duration-500 ease-out"
       )}
       onClick={onClick}
     >
       <div className={cn(
-        "w-16 h-16 flex items-center justify-center rounded-full",
+        "w-16 h-16 flex items-center justify-center rounded-full relative",
         active ? "bg-onda-primary" : "bg-onda-dark/50",
+        highlight ? "ring-2 ring-yellow-400 ring-pulse" : "",
         "transition-colors duration-300"
       )}>
         <Icon 
@@ -43,6 +46,9 @@ export default function MenuCard({ icon: Icon, label, active = false, index, onC
             active ? "text-white" : "text-white/70"
           )} 
         />
+        {highlight && (
+          <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full animate-pulse" />
+        )}
       </div>
       <span className={cn(
         "menu-text",
